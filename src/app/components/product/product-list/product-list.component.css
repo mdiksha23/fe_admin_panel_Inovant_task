@@ -1,0 +1,30 @@
+.custom-table {
+  border: 2px solid #007bff; /* Table border */
+  border-radius: 5px; /* Rounded corners */
+  overflow: hidden; /* Ensure rounded corners work */
+}
+
+.custom-table thead {
+  background-color: #007bff; /* Header background color */
+  color: white; /* Header text color */
+}
+
+.custom-table th, 
+.custom-table td {
+  border: 1px solid #dee2e6; /* Cell border */
+  padding: 10px; /* Cell padding */
+  text-align: center; /* Center-align text */
+}
+
+.custom-table tbody tr:nth-child(odd) {
+  background-color: #f8f9fa; /* Light background for odd rows */
+}
+
+.custom-table tbody tr:nth-child(even) {
+  background-color: #e9ecef; /* Slightly darker background for even rows */
+}
+
+.custom-table tbody tr:hover {
+  background-color: #d6e4ff; /* Hover effect */
+  transition: background-color 0.3s ease;
+}

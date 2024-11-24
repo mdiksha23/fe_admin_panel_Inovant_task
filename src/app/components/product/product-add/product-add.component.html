@@ -1,0 +1,51 @@
+<div class="container mt-5">
+    <div class="row justify-content-center">
+      <div class="col-md-8">
+        <div class="card">
+          <div class="card-header text-center">
+            <h3>Product Upload</h3>
+          </div>
+          <div class="card-body">
+            <form [formGroup]="productForm" (ngSubmit)="onSubmit()">
+              <div class="mb-3">
+                <label for="sku" class="form-label">SKU</label>
+                <input type="text" id="sku" class="form-control" formControlName="sku" />
+                <div *ngIf="productForm.get('sku')?.invalid && productForm.get('sku')?.touched" class="text-danger">
+                  SKU is required.
+                </div>
+              </div>
+  
+              <div class="mb-3">
+                <label for="name" class="form-label">Name</label>
+                <input type="text" id="name" class="form-control" formControlName="name" />
+                <div *ngIf="productForm.get('name')?.invalid && productForm.get('name')?.touched" class="text-danger">
+                  Name is required.
+                </div>
+              </div>
+  
+              <div class="mb-3">
+                <label for="price" class="form-label">Price</label>
+                <input type="number" id="price" class="form-control" formControlName="price" />
+                <div *ngIf="productForm.get('price')?.invalid && productForm.get('price')?.touched" class="text-danger">
+                  Price is required and must be a number.
+                </div>
+              </div>
+  
+              <div class="mb-3">
+                <label for="images" class="form-label">Upload Images</label>
+                <input type="file" id="images" class="form-control" formControlName="images" multiple />
+                <div *ngIf="productForm.get('images')?.invalid && productForm.get('images')?.touched" class="text-danger">
+                  At least one image is required.
+                </div>
+              </div>
+  
+              <div class="text-center">
+                <button type="submit" class="btn btn-primary" [disabled]="productForm.invalid">Submit</button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  

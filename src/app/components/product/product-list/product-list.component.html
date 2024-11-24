@@ -1,0 +1,57 @@
+
+  <div class="container mt-4">
+    <div class="d-flex justify-content-between align-items-center">
+      <h2 class="text-center mb-0">Product Table</h2>
+      <button class="btn btn-primary" routerLink="/product-add">Add</button>
+    </div>
+    <br>
+    <table class="table table-bordered table-striped table-hover">
+      <thead class="table-dark">
+        <tr>
+          <th scope="col">No.</th>
+          <th scope="col">SKU</th>
+          <th scope="col">Name</th>
+          <th scope="col">Price</th>
+          <th scope="col">Action</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr
+          *ngFor="
+            let product of paginatedProducts
+              | paginate : { itemsPerPage: 10, currentPage: currentPage };
+            let i = index
+          "
+        >
+          <td>{{ i + 1 }}</td>
+          <td>{{ product.sku }}</td>
+          <td>{{ product.name }}</td>
+          <td>{{ product.price }}</td>
+          <td>
+            <!-- Edit Button/Icon -->
+            <button
+              class="btn btn-warning btn-sm"
+              (click)="editProduct(product.id)"
+            >
+              <i class="fas fa-edit"></i> Edit
+            </button>
+            &nbsp;&nbsp;
+            <!-- Delete Button/Icon -->
+            <button
+              class="btn btn-danger btn-sm"
+              (click)="deleteProduct(product.id)"
+            >
+              <i class="fas fa-trash-alt"></i> Delete
+            </button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+
+    <!-- Pagination Controls -->
+    <pagination-controls
+      (pageChange)="onPageChange($event)"
+      class="d-flex justify-content-center"
+    ></pagination-controls>
+  </div>
+
