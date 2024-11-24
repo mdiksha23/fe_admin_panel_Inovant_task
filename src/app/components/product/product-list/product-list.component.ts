@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { HttpRequestService } from 'src/app/services/http-request.service';
 
 @Component({
@@ -8,7 +9,8 @@ import { HttpRequestService } from 'src/app/services/http-request.service';
 })
 export class ProductListComponent implements OnInit {
   products: any = [];
-  constructor(private http: HttpRequestService) {}
+
+  constructor(private http: HttpRequestService, private router:Router) {}
 
   ngOnInit(): void {
     this.getProductList();
@@ -34,7 +36,20 @@ export class ProductListComponent implements OnInit {
   }
 
   //  edit funtionlity
-  editProduct(id: any) {}
+  // editProduct(id: any) {
+  //   this.http.request('patch', '/updateProduct/:id')
+  // }
+  editProduct(data: any) {
+    console.log(data);
+    this.router.navigate(['/product-add'],{
+      queryParams: data,
+    })
+    
+
+  }
+
+
+  
   deleteProduct(id: any) {
     this.http
       .request('delete', 'product/deleteProduct/' + id, null, 'json')

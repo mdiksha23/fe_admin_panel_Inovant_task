@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
+import { ActivatedRoute, Router } from '@angular/router';
 import { HttpRequestService } from 'src/app/services/http-request.service';
 
 @Component({
@@ -15,9 +16,27 @@ export class ProductAddComponent implements OnInit {
     images: ['', Validators.required],
   });
 
-  constructor(private fb: FormBuilder, private http: HttpRequestService) {}
+   isRetrieve =false
+   id=''
+  constructor(private fb: FormBuilder, private http: HttpRequestService ,private router :Router,private route: ActivatedRoute) {}
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+  this.route.queryParams.subscribe((params : any) => {
+    console.log(params); 
+    if(params){
+       this.isRetrieve =true
+       this.id=params.id
+      this. productForm.patchValue({
+        sku : params.sku,
+        name:params.name,
+        price:params.price,
+  
+      })
+    }
+  });
+  
+    
+  }
 
   onSubmit() {
     if (this.productForm.valid) {
@@ -29,11 +48,41 @@ export class ProductAddComponent implements OnInit {
       for (let i = 0; i < files.length; i++) {
         formData.append('images', files[i]);
       }
+      if(this.isRetrieve){
+        this.http.request('post','product/updateProduct/'+this.id, formData ,'json').subscribe((res:any)=>{
+          console.log("res-->post", res);
+            
+          if(res.status){
+            this.router.navigate(['/product-list']);
+          }
+          else{
+            console.error('Error adding product:', res.message);
+            alert(res.message)
+           
+          }
+         
+        })
+      }
+      else{
+        this.http.request('post','product/addProduct', formData ,'json').subscribe((res:any)=>{
+          console.log("res-->post", res);
+            
+          if(res.status){
+            this.router.navigate(['/product-list']);
+          }
+          else{
+            console.error('Error adding product:', res.message);
+            alert(res.message)
+           
+          }
+         
+        })
 
-      this.http.request('post','product/addProduct',formData,'blob').subscribe((res:any)=>{
-        console.log("res-->",res);
-        
-      })
+      }
+    
     }
   }
+
+ 
 }
+
